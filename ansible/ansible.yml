@@ -1,3 +1,25 @@
 --- 
- name : install epel 
+- hosts : all 
+  become : true
   
+  tasks :
+   - name : install httpd
+     yum :
+       name: httpd
+       state: latest 
+
+   - name : start httpd 
+     service : 
+        name: httpd
+        state: started 
+
+   - name : install mysql 
+     yum :
+       name: mysql
+       state: latest
+
+   - name : install php 
+     yum :
+       name : php 
+       state : latest 
+
