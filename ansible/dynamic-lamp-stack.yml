@@ -1,21 +1,12 @@
 --- 
   
-   - name : install apache
+   - name : install apache,mariadb and php
      hosts: all 
      become: yes
      roles: 
        - apache 
        - index.html
-
+       - mysql
+       - php
+       - config_db  
    
-   - name: install mariadb 
-     hosts: all 
-     become: yes
-     roles:
-       - mariadb
-
-   - name: install php
-     hosts: all 
-     become: yes 
-     roles: 
-       - php      
