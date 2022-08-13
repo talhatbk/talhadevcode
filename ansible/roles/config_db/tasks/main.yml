@@ -1,0 +1,14 @@
+- name: Create a new database with name "{{ db_name }}"
+  mysql_db:
+     name: "{{ db_name }}"
+     state: present
+
+- name: Create new user "{{ db_user }}"
+  mysql_user:
+     host: 127.0.0.1 
+     name: "{{ db_user }}"
+     password: "{{ db_pass }}"
+     priv: '*.*:ALL,GRANT'
+     state: present
+     config_file: /root/.my.cnf. 
+     login_unix_socket: /var/run/mysqld/mysqld.sock    

@@ -1,0 +1,4 @@
+# vars file for config_db
+db_name: tbk6462
+db_user: talha
+db_pass: t12345

@@ -1,0 +1,11 @@
+
+- name : install database 
+  yum : 
+   name: mysql
+   state: present
+
+- name: start db 
+  service:
+    name: mysql
+    state: started
+
