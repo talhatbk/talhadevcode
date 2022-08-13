@@ -1,0 +1,59 @@
+--- 
+- hosts : all 
+  become : true
+  
+  tasks :
+   - name : install httpd
+     yum :
+       name: httpd
+       state: latest 
+
+   - name : start httpd 
+     service : 
+        name: httpd
+        state: started 
+
+
+   - name: add index.html
+     file:
+          path: /var/www/html/index.html
+          state: touch
+          owner: root
+          group: root
+          mode: '0644'
+
+   - name: populate text in index.html
+     lineinfile:
+          path: /var/www/html/index.html
+          line: hello world!
+          create: yes
+   
+   - name : install mysql 
+     yum:
+        name: mysql
+        state: latest 
+   
+   - name : installing pip 
+     yum :
+       name : pip 
+       state : latest
+    
+   - name: Install MySQL-python
+     yum:
+       name:
+         - python3-pip
+         - MySQL-python
+    
+
+   - name : adding mysql user and its passwd  
+     mysql_user:
+       name: Talha
+       password: 12345
+       priv: '*.*:ALL'
+       state: present
+ 
+   - name : install php 
+     yum :
+       name : php 
+       state : latest 
+  
