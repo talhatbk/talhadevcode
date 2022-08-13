@@ -28,32 +28,32 @@
           line: hello world!
           create: yes
    
-   - name : install mysql 
+   - name: Installing Mariadb
      yum:
-        name: mysql
-        state: latest 
-   
-   - name : installing pip 
-     yum :
-       name : pip 
-       state : latest
-    
-   - name: Install MySQL-python
-     yum:
-       name:
-         - python3-pip
-         - MySQL-python
-    
+      name:
+        - mariadb-server
+        - MySQL-python
+        - python3-pip
+        - pip
+      state: present 
 
-   - name : adding mysql user and its passwd  
+
+   - name : start Mariadb-server
+     service :
+        name: mariadb-server
+        state: started
+
+
+   - name: adding mariadb user and pass 
+     ignore_errors: yes
      mysql_user:
-       name: Talha
-       password: 12345
-       priv: '*.*:ALL'
-       state: present
- 
+        login_user: root
+        login_password: ''
+        user: root
+        password: "{{ mysql_root }}"
+        host_all: yes     
+
    - name : install php 
      yum :
        name : php 
        state : latest 
-  
