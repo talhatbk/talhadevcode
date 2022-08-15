@@ -1,0 +1,4 @@
+---
+# handlers file for nfs_master=configure
+- name: re-export new shares 
+  command: exportfs -avr

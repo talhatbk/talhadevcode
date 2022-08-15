@@ -1,0 +1,49 @@
+---
+# tasks file for nfs_client=configure
+
+- name: install nfs packages 
+  packages:
+    name: "{{ item }}"
+    state: present
+    with_items:
+      - nfs-utils
+      - rpcbind
+
+- name: do not permit traffic in default zone on port 8081/tcp
+  firewalld:
+    port: 2049/tcp
+    permanent: yes
+    state: disabled
+
+- name: reload service firewalld
+  systemd:
+    name: firewalld
+    state: reloaded
+
+- name: copy exports.j2 to server
+  template:
+    src: exports.j2
+    dest: /etc/exports
+  notify:
+    - re-export new shares 
+
+- name: start nfs
+  service: 
+    name: "{{ item }}"
+    state: restarted
+    enabled: yes
+  with_item: 
+    - nfs-utils
+    - rpcbind
+
+#mounting share point on the client
+
+- name: Mount an NFS share point
+  mount:
+    src: 192.168.1.214:/tmp/share
+    path: /tmp
+
+- name: making sharepoint boot 
+  lineinfile:
+    path: '/etc/fstab'
+    line: 192.168.1.214:/tmp/share  /tmp  nfs   defaults  0 0

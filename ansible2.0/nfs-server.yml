@@ -1,0 +1,16 @@
+---
+- name: Setup NFS Master
+  hosts: nfs_master
+  become: yes
+  roles:
+     role: nfs-master-configure
+  tags:
+     - nfs-master
+
+- name: setup NFS Client 
+  hosts: nfs_clients
+  become: yes
+  roles: 
+     role: nfs-client-configure
+  tags:
+    - nfs_client
