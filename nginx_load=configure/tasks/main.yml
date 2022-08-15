@@ -1,0 +1,54 @@
+---
+# tasks file for nginx_load=configure
+
+
+   - name: install epel
+     yum: 
+       name: epel-release
+       state: latest
+       update_cache: yes 
+    
+  #  - name: update repo
+  #    yum: 
+  #       state: latest
+  #       update_cache: yes  
+   
+   - name: updating yum
+     command: yum update
+       
+
+   - name: install nginx
+     yum:
+       name: nginx
+       state: latest
+   
+
+   - name : start nginx
+     service :
+        name: nginx
+        state: started 
+        enabled: yes 
+  
+   - name: adding nginx in firewall 
+     firewalld:
+       service: nginx
+       permanent: yes
+       state: enabled
+     notify: 
+       - Restart firewalld to apply new changes
+
+   - name: copy app.conf to /etc/nginx/conf.d/app.conf
+     become: yes
+     copy:
+       src: /root/ansible/nginx_load=configure/files/app.conf
+       dest: /etc/nginx/conf.d/app.conf
+
+    
+   - name: adding nginx port 
+     firewalld:
+        port: 80/tcp
+        permanent: yes
+        state: enabled
+     notify: 
+      - Restart firewalld to apply new changes
+      - restart nginx

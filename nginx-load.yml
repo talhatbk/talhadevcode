@@ -1,0 +1,17 @@
+---
+- name: setup apache webserver 
+  hosts: apache_webserver
+  become: yes
+  roles:
+      - apache_server=configure 
+  tags:
+      - apache_webserver
+
+
+- name: setup nginx loadbalancer 
+  hosts: nginx_loadbalancer
+  become: yes
+  roles: 
+     - nginx_load=configure
+  tags:
+     - nginx_loadbalancer
