@@ -1,0 +1,12 @@
+---
+# handlers file for nginx_load=configure
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted
+
+    
+- name: Restart firewalld to apply new changes
+  service:
+    name: firewalld
+    state: reloaded

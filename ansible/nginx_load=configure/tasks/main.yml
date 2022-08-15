@@ -8,7 +8,10 @@
        state: latest
        update_cache: yes 
     
-  
+  #  - name: update repo
+  #    yum: 
+  #       state: latest
+  #       update_cache: yes  
    
    - name: updating yum
      command: yum update
