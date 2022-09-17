@@ -1,0 +1,15 @@
+<code style="font-size: 10.2375px; font-family: Consolas, Menlo, Monaco, "Courier New", monospace; color: rgba(51, 51, 51, 0.85); background-color: rgb(246, 247, 248); border-radius: 2px; display: block; line-height: 1.5; position: relative; top: 0px; outline: 0px !important;"> 
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-svc
+spec:
+  selector:
+    role: app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+      nodePort: 32000
+  type: NodePort
+</code>
